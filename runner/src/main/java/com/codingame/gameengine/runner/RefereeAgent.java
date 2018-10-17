@@ -12,7 +12,7 @@ import com.codingame.gameengine.core.RefereeMain;
 class RefereeAgent extends Agent {
 
     public static final int REFEREE_MAX_BUFFER_SIZE_EXTRA = 100_000;
-    public static final int REFEREE_MAX_BUFFER_SIZE = 30_000;
+    public static final int REFEREE_MAX_BUFFER_SIZE = 100_000;
     private boolean lastRefereeByteIsCarriageReturn = false;
 
     private PipedInputStream agentStdin = new PipedInputStream(100_000);
