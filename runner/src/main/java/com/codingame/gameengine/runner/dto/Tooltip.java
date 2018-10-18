@@ -1,6 +1,6 @@
 package com.codingame.gameengine.runner.dto;
 
-public class Tooltip {
+class Tooltip {
     int turn;
     String text;
     Integer event;
