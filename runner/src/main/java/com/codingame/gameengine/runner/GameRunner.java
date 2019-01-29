@@ -119,14 +119,14 @@ abstract class GameRunner {
 
         bootstrapPlayers();
 
-        readInitFrameErrors();
-
         Command initCommand = new Command(OutputCommand.INIT);
         initCommand.addLine(players.size());
 
         buildInitCommand(initCommand);
 
         referee.sendInput(initCommand.toString());
+        
+        readInitFrameErrors();
         int round = 0;
         while (true) {
             GameTurnInfo turnInfo = readGameInfo(round);

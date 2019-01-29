@@ -75,6 +75,8 @@ function PlayerCtrl ($scope, $timeout, $interval, $filter, drawerFactory, gameMa
     ctrl.gameManager = gameManagerFactory.createGameManagerFromGameInfo($scope.drawer, ctrl.gameInfo, true)
     ctrl.gameManager.subscribe(onUpdate)
 
+    onFrameChange(0)
+
     return playerLoadedPromise.then(playerApi => {
       playerApi.initReplay(ctrl.gameManager)
     })
