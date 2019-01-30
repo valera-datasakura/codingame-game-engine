@@ -75,7 +75,7 @@ function PlayerCtrl ($scope, $timeout, $interval, $filter, drawerFactory, gameMa
     ctrl.gameManager = gameManagerFactory.createGameManagerFromGameInfo($scope.drawer, ctrl.gameInfo, true)
     ctrl.gameManager.subscribe(onUpdate)
 
-    onFrameChange(0)
+    updateFrameInfo(0)
 
     return playerLoadedPromise.then(playerApi => {
       playerApi.initReplay(ctrl.gameManager)
@@ -91,6 +91,22 @@ function PlayerCtrl ($scope, $timeout, $interval, $filter, drawerFactory, gameMa
     }
   }
 
+  function updateFrameInfo(frame) {
+    for (let i in ctrl.data.ids) {
+      const stdout = ctrl.data.outputs[i][startFrame]
+      if (stdout) {
+        $scope.agents[i].stdout = stdout
+      }
+      const stderr = ctrl.data.errors[i][startFrame]
+      if (stderr) {
+        $scope.agents[i].stderr = stderr
+      }
+    }
+    $scope.referee.stdout = $scope.referee.stdout || ctrl.data.outputs.referee[startFrame]
+    $scope.referee.stderr = $scope.referee.stderr || ctrl.data.errors.referee[startFrame]
+    $scope.summary = ctrl.data.summaries[startFrame]
+  }
+
   function onFrameChange (frame) {
     let startFrame = frame
     while (startFrame > 0 && !ctrl.gameInfo.frames[startFrame - 1].keyframe) {
@@ -104,19 +120,7 @@ function PlayerCtrl ($scope, $timeout, $interval, $filter, drawerFactory, gameMa
     }
 
     while (startFrame <= frame) {
-      for (let i in ctrl.data.ids) {
-        const stdout = ctrl.data.outputs[i][startFrame]
-        if (stdout) {
-          $scope.agents[i].stdout = stdout
-        }
-        const stderr = ctrl.data.errors[i][startFrame]
-        if (stderr) {
-          $scope.agents[i].stderr = stderr
-        }
-      }
-      $scope.referee.stdout = $scope.referee.stdout || ctrl.data.outputs.referee[startFrame]
-      $scope.referee.stderr = $scope.referee.stderr || ctrl.data.errors.referee[startFrame]
-      $scope.summary = ctrl.data.summaries[startFrame]
+      updateFrameInfo(startFrame)
       startFrame++
     }
   }
