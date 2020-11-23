@@ -2,6 +2,12 @@
 
 The CodinGame SDK is regularly updated and improved. This document lets you know what changed in the latest releases.
 
+## 3.15.6
+
+### 🐞 Bug fix
+
+- BufferedGroup will now dynamically resize to fit contents.
+
 ## 3.15.5
 
 ### 🐞 Bug fix
